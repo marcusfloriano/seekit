@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  * @property string $title
  * @property string $subtitle
  * @property string $body
- * @property int $refid
+ * @property string $refid
  * @property string $reftype
  * @property string $serialized
  * @property \Cake\I18n\Time $created

@@ -21,7 +21,7 @@ class CreateSeekIt extends AbstractMigration
         $table->addColumn('subtitle', 'string', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
+            'null' => true,
         ])->addIndex(['subtitle'],['type' => 'fulltext']);
 
         $table->addColumn('body', 'text', [
@@ -29,20 +29,21 @@ class CreateSeekIt extends AbstractMigration
             'null' => false,
         ])->addIndex(['body'],['type' => 'fulltext']);
         
-        $table->addColumn('refid', 'integer', [
+        $table->addColumn('refid', 'string', [
             'default' => null,
-            'null' => false,
+            'limit' => 255,
+            'null' => true,
         ]);
 
         $table->addColumn('reftype', 'string', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
+            'null' => true,
         ]);
 
         $table->addColumn('serialized', 'text', [
             'default' => null,
-            'null' => false,
+            'null' => true,
         ]);
 
         $table->addColumn('created', 'datetime', [

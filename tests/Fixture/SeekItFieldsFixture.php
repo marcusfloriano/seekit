@@ -43,7 +43,7 @@ class SeekItFieldsFixture extends TestFixture
             'name' => 'Lorem ipsum dolor sit amet',
             'value_string' => 'Lorem ipsum dolor sit amet',
             'value_integer' => 1,
-            'value_datetime' => '2017-04-23 17:35:16'
+            'value_datetime' => '2017-04-23 18:14:02'
         ],
     ];
 }

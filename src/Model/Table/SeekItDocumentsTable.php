@@ -56,25 +56,20 @@ class SeekItDocumentsTable extends Table
             ->notEmpty('title');
 
         $validator
-            ->requirePresence('subtitle', 'create')
-            ->notEmpty('subtitle');
+            ->allowEmpty('subtitle');
 
         $validator
             ->requirePresence('body', 'create')
             ->notEmpty('body');
 
         $validator
-            ->integer('refid')
-            ->requirePresence('refid', 'create')
-            ->notEmpty('refid');
+            ->allowEmpty('refid');
 
         $validator
-            ->requirePresence('reftype', 'create')
-            ->notEmpty('reftype');
+            ->allowEmpty('reftype');
 
         $validator
-            ->requirePresence('serialized', 'create')
-            ->notEmpty('serialized');
+            ->allowEmpty('serialized');
 
         return $validator;
     }
