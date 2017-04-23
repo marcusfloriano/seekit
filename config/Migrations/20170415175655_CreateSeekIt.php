@@ -10,7 +10,7 @@ class CreateSeekIt extends AbstractMigration
      */
     public function up()
     {
-        $table = $this->table('SeekItDocuments');
+        $table = $this->table('seek_it_documents');
         
         $table->addColumn('title', 'string', [
             'default' => null,
@@ -55,7 +55,7 @@ class CreateSeekIt extends AbstractMigration
         ]);
         $table->create();
 
-        $table = $this->table('SeekItFields');
+        $table = $this->table('seek_it_fields');
         $table->addColumn('name', 'string', [
             'default' => null,
             'limit' => 255,
@@ -76,19 +76,19 @@ class CreateSeekIt extends AbstractMigration
         ]);
         $table->create();
 
-        $table = $this->table('SeekItDocumentsFields');
+        $table = $this->table('seek_it_documents_fields');
         $table->addColumn('document_id', 'integer', [
             'default' => null,
             'null' => true,
         ])->addForeignKey(
-            'document_id', 'SeekItDocuments', 'id',
+            'document_id', 'seek_it_documents', 'id',
             array('delete'=> 'SET_NULL', 'update'=> 'NO_ACTION')
         );
         $table->addColumn('field_id', 'integer', [
             'default' => null,
             'null' => true,
         ])->addForeignKey(
-            'field_id', 'SeekItFields', 'id',
+            'field_id', 'seek_it_fields', 'id',
             array('delete'=> 'SET_NULL', 'update'=> 'NO_ACTION')
         );
         $table->create();
@@ -96,8 +96,8 @@ class CreateSeekIt extends AbstractMigration
     }
 
     public function down() {
-        $this->dropTable('SeekItDocumentsFields');
-        $this->dropTable('SeekItFields');
-        $this->dropTable('SeekItDocuments');
+        $this->dropTable('seek_it_documents_fields');
+        $this->dropTable('seek_it_fields');
+        $this->dropTable('seek_it_documents');
     }
 }
