@@ -66,7 +66,6 @@ class SeekItDocumentsTableTest extends TestCase
         $seek_document->reftype = "content";
         if($this->SeekItDocuments->save($seek_document)){
             $this->assertGreaterThan(1, $seek_document->id);
-            debug($seek_document);
         }
     }
 

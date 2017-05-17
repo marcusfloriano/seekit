@@ -6,13 +6,13 @@ use Cake\ORM\Entity;
 /**
  * SeekItDocument Entity
  *
- * @property int $id
- * @property string $title
- * @property string $subtitle
- * @property string $body
- * @property string $refid
- * @property string $reftype
- * @property string $serialized
+ * @property int $id Id of document added in SeekIt
+ * @property string $title Title of document
+ * @property string $subtitle Sub-title of document
+ * @property string $body Body of document, used for full search, this content should represent all information of document
+ * @property string $refid Reference ID it represent the real document indexed
+ * @property string $reftype Reference TYPE it represent the type of document, used for create the object from document
+ * @property string $serialized Object serialized reference of the real document
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  */
