@@ -1,5 +1,5 @@
 {
-    "name": "your-name-here/SeekIt",
+    "name": "marcusfloriano/SeekIt",
     "description": "SeekIt plugin for CakePHP",
     "type": "cakephp-plugin",
     "require": {
