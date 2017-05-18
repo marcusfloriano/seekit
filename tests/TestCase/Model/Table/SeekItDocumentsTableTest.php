@@ -58,14 +58,26 @@ class SeekItDocumentsTableTest extends TestCase
      */
     public function testCreateNewDocument()
     {
+
+        $article = $this->getMockBuilder('Article')
+            ->setMethods(['getId','getTitle','getSubTitle','getBody'])
+            ->getMock();
+        $article->method('getId')->willReturn('ABCDEFG');
+        $article->method('getTitle')->willReturn('New document for add');
+        $article->method('getSubTitle')->willReturn("The subtitle of new document");
+        $article->method('getBody')->willReturn("The body of document, this contains all text that represent this document.");
+        
         $seek_document = $this->SeekItDocuments->newEntity();
-        $seek_document->title = "New document for add";
-        $seek_document->subtitle = "The subtitle of new document";
-        $seek_document->body = "The body of document, this contains all text that represent this document.";
-        $seek_document->refid = "ABCDFG";
-        $seek_document->reftype = "content";
+        $seek_document->title = $article->getTitle();
+        $seek_document->subtitle = $article->getSubTitle();
+        $seek_document->body = $article->getBody();
+        $seek_document->refid = $article->getId();
+        $seek_document->reftype = get_class($article);
+        $seek_document->serialize = serialize($article);
+
         if($this->SeekItDocuments->save($seek_document)){
             $this->assertGreaterThan(1, $seek_document->id);
+            debug($seek_document);
         }
     }
 
