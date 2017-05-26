@@ -54,6 +54,13 @@ class SeekItBehavior extends Behavior
         $this->_seekItDocuments = TableRegistry::get('SeekIt.SeekItDocuments');
     }
 
+    /**
+     * Create or update new Document when the Entity is created or updated
+     *
+     * @param Event $event
+     * @param EntityInterface $entity
+     * @return void
+     */
     public function beforeSave(Event $event, EntityInterface $entity)
     {
         $config = $this->_config;
