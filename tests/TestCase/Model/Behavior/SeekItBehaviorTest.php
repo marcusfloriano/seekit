@@ -2,12 +2,16 @@
 namespace SeekIt\Test\TestCase\Model\Behavior;
 
 use Cake\ORM\TableRegistry;
-use SeekIt\Model\Table\SeekItDocumentsTable;
+use Cake\ORM\Table;
+use Cake\ORM\Entity;
+
 use Cake\TestSuite\TestCase;
-use SeekIt\Model\Behavior\SeekItBehavior;
 use Cake\Event\Event;
 use Cake\Datasource\EntityInterface;
-use Cake\ORM\Table;
+
+use SeekIt\Model\Behavior\SeekItBehavior;
+use SeekIt\Model\Table\SeekItDocumentsTable;
+
 
 /**
  * SeekIt\Model\Behavior\SeekItBehavior Test Case
@@ -53,7 +57,10 @@ class SeekItBehaviorTest extends TestCase
         $article_table = $this->getMockBuilder(Table::class)->getMock();
         $this->SeekIt = new SeekItBehavior($article_table, [
             'entity_properties'=> [
-                'title' => 'title'
+                'refid' => 'id',
+                'title' => 'title',
+                'subtitle' => 'subtitle',
+                'body' => 'content'
             ]
         ]);
     }
@@ -78,13 +85,24 @@ class SeekItBehaviorTest extends TestCase
     public function testBeforeSave()
     {
         $event = new Event("Before.save", null, null);
-        $this->SeekIt->beforeSave(
-            $event, 
-            $this->getMockBuilder(EntityInterface::class)->getMock());
+        $entity = new Entity([],[]);
+        $entity->id = "ABCDEFG";
+        $entity->title = "Title of article";
+        $entity->subtitle = "Sub title of article";
+        $entity->content = "Content of article";
+
+        $this->SeekIt->beforeSave($event, $entity);
 
         $seek_document_for_delete = $this->SeekItDocuments->find()->where(['refid' => 'ABCDEFG'])->first();
         $this->assertNotNull($seek_document_for_delete);
         $this->assertEquals($seek_document_for_delete->refid,"ABCDEFG");
+        $this->assertEquals($seek_document_for_delete->title,"Title of article");
+        $this->assertEquals($seek_document_for_delete->subtitle,"Sub title of article");
+        $this->assertEquals($seek_document_for_delete->body,"Content of article");
+        $this->assertEquals($seek_document_for_delete->reftype,"Cake\ORM\Entity");
+        $unserialized = unserialize($seek_document_for_delete->serialized);
+        $this->assertNotNull($unserialized);
+        $this->assertEquals(get_class($unserialized),"Cake\ORM\Entity");
 
     }
 }
