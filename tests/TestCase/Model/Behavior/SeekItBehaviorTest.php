@@ -78,11 +78,11 @@ class SeekItBehaviorTest extends TestCase
     }
 
     /**
-     * Test correct use for before save
+     * Test basic before save
      *
      * @return void
      */
-    public function testBeforeSave()
+    public function testSaveDocumentOnBeforeSave()
     {
         $event = new Event("Before.save", null, null);
         $entity = new Entity([],[]);
@@ -103,6 +103,42 @@ class SeekItBehaviorTest extends TestCase
         $unserialized = unserialize($seek_document_for_delete->serialized);
         $this->assertNotNull($unserialized);
         $this->assertEquals(get_class($unserialized),"Cake\ORM\Entity");
+    }
+
+    /**
+     * Test update the document
+     *
+     * @return void
+     */
+    public function testUpdateDocumentOnBeforeSave()
+    {
+        $event = new Event("Before.save", null, null);
+        $entity = new Entity([],[]);
+        $entity->id = "ABCDEFG";
+        $entity->title = "Title of article";
+        $entity->subtitle = "Sub title of article";
+        $entity->content = "Content of article";
+
+        $this->SeekIt->beforeSave($event, $entity);
+
+        $seek_document_for_delete = $this->SeekItDocuments->find()->where(['refid' => 'ABCDEFG'])->first();
+        $this->assertNotNull($seek_document_for_delete);
+        $this->assertEquals($seek_document_for_delete->refid,"ABCDEFG");
+        $this->assertEquals($seek_document_for_delete->title,"Title of article");
+        $this->assertEquals($seek_document_for_delete->subtitle,"Sub title of article");
+        $this->assertEquals($seek_document_for_delete->body,"Content of article");
+        $this->assertEquals($seek_document_for_delete->reftype,"Cake\ORM\Entity");
+        $unserialized = unserialize($seek_document_for_delete->serialized);
+        $this->assertNotNull($unserialized);
+        $this->assertEquals(get_class($unserialized),"Cake\ORM\Entity");
+
+        $entity->title = "Title of article UPDATE";
+        $this->SeekIt->beforeSave($event, $entity);
+
+        $seek_document_for_deletes = $this->SeekItDocuments->find()->where(['refid' => 'ABCDEFG']);
+        $this->assertEquals(1, $seek_document_for_deletes->count());
+        $seek_document_for_delete = $seek_document_for_deletes->first();
+        $this->assertEquals("Title of article UPDATE", $seek_document_for_delete->title);
 
     }
 }
