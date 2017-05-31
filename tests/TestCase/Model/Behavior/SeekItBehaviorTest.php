@@ -141,4 +141,39 @@ class SeekItBehaviorTest extends TestCase
         $this->assertEquals("Title of article UPDATE", $seek_document_for_delete->title);
 
     }
+
+    public function testDeleteDocumentOnBeforeDelete()
+    {
+        $event = new Event("Before.save", null, null);
+        $entity = new Entity([],[]);
+        $entity->id = "ABCDEFG";
+        $entity->title = "Title of article";
+        $entity->subtitle = "Sub title of article";
+        $entity->content = "Content of article";
+
+        $this->SeekIt->beforeSave($event, $entity);
+
+        $seek_document_for_delete = $this->SeekItDocuments->find()->where(['refid' => 'ABCDEFG'])->first();
+        $this->assertNotNull($seek_document_for_delete);
+        $this->assertEquals($seek_document_for_delete->refid,"ABCDEFG");
+        $this->assertEquals($seek_document_for_delete->title,"Title of article");
+        $this->assertEquals($seek_document_for_delete->subtitle,"Sub title of article");
+        $this->assertEquals($seek_document_for_delete->body,"Content of article");
+        $this->assertEquals($seek_document_for_delete->reftype,"Cake\ORM\Entity");
+        $unserialized = unserialize($seek_document_for_delete->serialized);
+        $this->assertNotNull($unserialized);
+        $this->assertEquals(get_class($unserialized),"Cake\ORM\Entity");
+
+        $event = new Event("Before.delete", null, null);
+        $entity = new Entity([],[]);
+        $entity->id = "ABCDEFG";
+        $entity->title = "Title of article";
+        $entity->subtitle = "Sub title of article";
+        $entity->content = "Content of article";
+
+        $this->SeekIt->beforeDelete($event, $entity);
+
+        $seek_document_for_deletes = $this->SeekItDocuments->find()->where(['refid' => 'ABCDEFG']);
+        $this->assertEquals(0, $seek_document_for_deletes->count());
+    }
 }

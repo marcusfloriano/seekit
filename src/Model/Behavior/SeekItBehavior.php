@@ -88,4 +88,19 @@ class SeekItBehavior extends Behavior
             throw new SeekItBehaviorException($e->getMessage());
         }
     }
+
+    public function beforeDelete(Event $event, EntityInterface $entity)
+    {
+        $config = $this->_config;
+        $seek_document = null;
+        $seek_documents = $this->_seekItDocuments->find()->where(['refid' => $entity->get($config['entity_properties']['refid'])]);
+        if ($seek_documents->count() > 0) {
+            $seek_document = $seek_documents->first();
+            try {
+                $this->_seekItDocuments->delete($seek_document);
+            } catch (\Cake\ORM\Exception\PersistenceFailedException $e) {
+                throw new SeekItBehaviorException('Erro in delete the document: ' . $e->getEntity());
+            }
+        }
+    }
 }
