@@ -1,6 +1,8 @@
 <?php
 namespace SeekIt\Model\Behavior;
 
+use ArrayObject;
+
 use Cake\ORM\Behavior;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -89,7 +91,15 @@ class SeekItBehavior extends Behavior
         }
     }
 
-    public function beforeDelete(Event $event, EntityInterface $entity)
+    /**
+     * Delete Document when the Entity is deleted
+     *
+     * @param Event $event
+     * @param EntityInterface $entity
+     * @param ArrayObject $options
+     * @return void
+     */
+    public function beforeDelete(Event $event, EntityInterface $entity, ArrayObject $options)
     {
         $config = $this->_config;
         $seek_document = null;
