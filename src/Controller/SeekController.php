@@ -38,7 +38,7 @@ class SeekController extends AppController
             $this->paginate = [
                 'fields' => [],
                 'contain' => [],
-                'conditions' => "MATCH(title) AGAINST('{$qs["seek-it-search"]}' IN BOOLEAN MODE)",
+                'conditions' => "MATCH(title, subtitle, body) AGAINST('{$qs["seek-it-search"]}' IN BOOLEAN MODE)",
                 'order' => [],
                 'sortWhitelist'=> []
             ];

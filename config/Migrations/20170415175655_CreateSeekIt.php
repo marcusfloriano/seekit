@@ -54,6 +54,7 @@ class CreateSeekIt extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
+        $table->addIndex(['title','subtitle','body'],['type' => 'fulltext']);
         $table->create();
 
         $table = $this->table('seek_it_fields');
