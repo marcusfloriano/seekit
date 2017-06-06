@@ -25,7 +25,7 @@ class SeekItDocumentsFieldsTableTest extends TestCase
      */
     public $fixtures = [
         'plugin.seek_it.seek_it_documents_fields',
-        'plugin.seek_it.documents',
+        'plugin.seek_it.seek_it.documents',
         'plugin.seek_it.seek_it_fields'
     ];
 
