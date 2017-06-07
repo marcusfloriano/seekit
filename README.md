@@ -1,4 +1,4 @@
-# SeekIt plugin for CakePHP
+# SeekIt plugin for CakePHP to Search FullText on Mysql
 
 ## Motivation
 

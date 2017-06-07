@@ -31,14 +31,16 @@ class SeekController extends AppController
      */
     public function index()
     {
-        $this->set('results',[]);
         $qs = $this->request->query();
-        $this->set('search', (array_key_exists("seek-it-search",$qs)) ? $qs["seek-it-search"] : "" );
-        if(array_key_exists("seek-it-search",$qs)) {
+        $term = (array_key_exists("seek-it-search",$qs)) ? $qs["seek-it-search"] : "";
+        $this->set('term', htmlentities($term) );
+        $this->set('results',[]);
+        
+        if($term != "") {
             $this->paginate = [
                 'fields' => [],
                 'contain' => [],
-                'conditions' => "MATCH(title, subtitle, body) AGAINST('{$qs["seek-it-search"]}' IN BOOLEAN MODE)",
+                'conditions' => "MATCH(title, subtitle, body) AGAINST('{$term}' IN BOOLEAN MODE)",
                 'order' => [],
                 'sortWhitelist'=> []
             ];

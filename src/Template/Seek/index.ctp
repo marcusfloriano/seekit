@@ -3,7 +3,7 @@
         <div class="panel-body">
             <form class="row" action="/seek-it/seek" method="GET">
                 <div class="form-group col-md-8">
-                    <input type="text" class="form-control" id="seek-it-search" name="seek-it-search" placeholder="Search" value="<?php echo $search ?>" />
+                    <input type="text" class="form-control" id="seek-it-search" name="seek-it-search" placeholder="Search" value="<?php echo $term ?>" />
                 </div>
                 <button type="submit" class="btn btn-default col-md-1">Submit</button>
             </form>
