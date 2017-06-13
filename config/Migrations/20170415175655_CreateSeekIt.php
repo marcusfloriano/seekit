@@ -5,11 +5,14 @@ use Cake\Datasource\ConnectionManager;
 class CreateSeekIt extends AbstractMigration
 {
     /**
-     * Create the table SeekItDocuments for contain the data of searching
+     * Create the struct of tables for SeekIt
      * @return void
      */
     public function up()
     {
+        /**
+         * Create the SeekItDocuments table
+         */
         $table = $this->table('seek_it_documents');
         
         $table->addColumn('title', 'string', [
@@ -57,7 +60,17 @@ class CreateSeekIt extends AbstractMigration
         $table->addIndex(['title','subtitle','body'],['type' => 'fulltext']);
         $table->create();
 
-        $table = $this->table('seek_it_fields');
+        /**
+         * Create the SeekItDocumentsFields table
+         */
+        $table = $this->table('seek_it_document_fields');
+        $table->addColumn('seek_it_documents_id', 'integer', [
+            'default' => null,
+            'null' => true,
+        ])->addForeignKey(
+            'seek_it_documents_id', 'seek_it_documents', 'id',
+            array('delete'=> 'SET_NULL', 'update'=> 'NO_ACTION')
+        );
         $table->addColumn('name', 'string', [
             'default' => null,
             'limit' => 255,
@@ -78,28 +91,10 @@ class CreateSeekIt extends AbstractMigration
         ]);
         $table->create();
 
-        $table = $this->table('seek_it_documents_fields');
-        $table->addColumn('document_id', 'integer', [
-            'default' => null,
-            'null' => true,
-        ])->addForeignKey(
-            'document_id', 'seek_it_documents', 'id',
-            array('delete'=> 'SET_NULL', 'update'=> 'NO_ACTION')
-        );
-        $table->addColumn('field_id', 'integer', [
-            'default' => null,
-            'null' => true,
-        ])->addForeignKey(
-            'field_id', 'seek_it_fields', 'id',
-            array('delete'=> 'SET_NULL', 'update'=> 'NO_ACTION')
-        );
-        $table->create();
-
     }
 
     public function down() {
-        $this->dropTable('seek_it_documents_fields');
-        $this->dropTable('seek_it_fields');
+        $this->dropTable('seek_it_document_fields');
         $this->dropTable('seek_it_documents');
     }
 }

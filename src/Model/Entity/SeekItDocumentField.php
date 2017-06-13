@@ -4,15 +4,18 @@ namespace SeekIt\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * SeekItField Entity
+ * SeekItDocumentField Entity
  *
  * @property int $id
+ * @property int $seek_it_documents_id
  * @property string $name
  * @property string $value_string
  * @property int $value_integer
  * @property \Cake\I18n\Time $value_datetime
+ *
+ * @property \SeekIt\Model\Entity\Document $document
  */
-class SeekItField extends Entity
+class SeekItDocumentField extends Entity
 {
 
     /**
@@ -28,4 +31,14 @@ class SeekItField extends Entity
         '*' => true,
         'id' => false
     ];
+
+    protected function _getValue() {
+        if(!empty($this->value_string)) {
+            return $this->value_string;
+        } else if(!empty($this->value_integer)) {
+            return $this->value_integer;
+        } else if(!empty($this->value_datetime)) {
+            return $this->value_datetime;
+        }
+    }
 }

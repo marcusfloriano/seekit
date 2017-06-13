@@ -15,7 +15,7 @@ use Cake\Validation\Validator;
  * @method \SeekIt\Model\Entity\SeekItDocument|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \SeekIt\Model\Entity\SeekItDocument patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \SeekIt\Model\Entity\SeekItDocument[] patchEntities($entities, array $data, array $options = [])
- * @method \SeekIt\Model\Entity\SeekItDocument findOrCreate($search, callable $callback = null)
+ * @method \SeekIt\Model\Entity\SeekItDocument findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -32,11 +32,15 @@ class SeekItDocumentsTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('seek_it_documents');
-        $this->displayField('title');
-        $this->primaryKey('id');
+        $this->setTable('seek_it_documents');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->hasMany('SeekItDocumentFields')
+            ->setForeignKey('seek_it_documents_id')
+            ->setDependent(true);
     }
 
     /**

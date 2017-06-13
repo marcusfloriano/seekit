@@ -13,6 +13,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>Type</th>
                     <th>Title</th>
                 </tr>
             </thead>
@@ -24,11 +25,29 @@
                 <?php endif; ?>
                 <?php foreach ($results as $item): ?>
                 <tr>
+                    <td><?php echo $item->reftype ?></td>
                     <td><?php echo $item->title ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+    <?php if ($this->Paginator->param('count') > 1): ?>
+    <div class="panel panel-default">
+        <div class="pull-left">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< '.__('first')) ?>
+                <?= ($this->Paginator->param('count') > 20 )? $this->Paginator->prev('< '.__('previous')) : "" ?>
+                <?= $this->Paginator->numbers(['after' => '', 'before' => '']) ?>
+                <?= ($this->Paginator->param('count') > 20 )? $this->Paginator->next(__('next').' >') : "" ?>
+                <?= $this->Paginator->last(__('last').' >>') ?>
+            </ul>
+        </div>
+        <div class="pull-right pagination-count">
+            <p><?= $this->Paginator->param('current').' '.__('of').' '.$this->Paginator->param('count') ?></p>
+        </div>
+        <div class="cleaxrfix"></div>
+    </div>
+    <?php endif; ?>
 </div>
 <!-- /container-fluid -->
