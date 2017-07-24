@@ -33,12 +33,9 @@ class SeekController extends AppController
      */
     public function index()
     {
-        $qs = $this->request->query();
-        $term = (array_key_exists("seek-it-search",$qs)) ? $qs["seek-it-search"] : "";
+        $term = (empty($this->request->query("seek-it-search"))) ? "" : $this->request->query("seek-it-search");
         $this->set('term', htmlentities($term) );
         $this->set('results',[]);
-        debug(Configure::read('SeekIt.show'));
-        die;
         if($term != "") {
             try {
                 $results =  $this->SeekItDocuments->find()

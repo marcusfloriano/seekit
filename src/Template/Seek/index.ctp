@@ -11,13 +11,7 @@
     </div>
     <div class="panel panel-default">
         <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Process</th>
-                    <th>Title</th>
-                </tr>
-            </thead>
+            <?php echo $this->SeekResults->showHeadTable() ?>
             <tbody>
                 <?php if(count($results) == 0): ?>
                 <tr>
@@ -25,21 +19,7 @@
                 </tr>
                 <?php endif; ?>
                 <?php foreach ($results as $item): ?>
-                <tr>
-                    <td><?php echo $item->reftype ?></td>
-                    <td><?php 
-                    if(!empty($item->seek_it_document_fields) && count($item->seek_it_document_fields) > 0) {
-                        foreach ($item->seek_it_document_fields as $value) {
-                            if($value->name == "Processos") {
-                                echo $value->value;
-                            }
-                        }
-                    } else {
-                        echo "-";
-                    }
-                    ?></td>
-                    <td><?php echo $item->title ?></td>
-                </tr>
+                <?php echo $this->SeekResults->showTrBodyTable($item) ?>
                 <?php endforeach; ?>
             </tbody>
         </table>

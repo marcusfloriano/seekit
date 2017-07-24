@@ -32,9 +32,9 @@ class SeekItDocumentFieldsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('seek_it_document_fields');
-        $this->setDisplayField('name');
-        $this->setPrimaryKey('id');
+        $this->table('seek_it_document_fields');
+        $this->displayField('name');
+        $this->primaryKey('id');
 
         $this->belongsTo('SeekIt.SeekItDocuments');
     }

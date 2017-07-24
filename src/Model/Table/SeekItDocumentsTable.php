@@ -32,9 +32,9 @@ class SeekItDocumentsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('seek_it_documents');
-        $this->setDisplayField('title');
-        $this->setPrimaryKey('id');
+        $this->table('seek_it_documents');
+        $this->displayField('title');
+        $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
 
