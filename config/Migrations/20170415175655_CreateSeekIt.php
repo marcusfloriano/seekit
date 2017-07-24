@@ -64,11 +64,11 @@ class CreateSeekIt extends AbstractMigration
          * Create the SeekItDocumentsFields table
          */
         $table = $this->table('seek_it_document_fields');
-        $table->addColumn('seek_it_documents_id', 'integer', [
+        $table->addColumn('seek_it_document_id', 'integer', [
             'default' => null,
             'null' => true,
         ])->addForeignKey(
-            'seek_it_documents_id', 'seek_it_documents', 'id',
+            'seek_it_document_id', 'seek_it_documents', 'id',
             array('delete'=> 'SET_NULL', 'update'=> 'NO_ACTION')
         );
         $table->addColumn('name', 'string', [

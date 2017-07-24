@@ -2,6 +2,7 @@
 namespace SeekIt\Controller;
 
 use Cake\Event\Event;
+use Cake\Core\Configure;
 
 use SeekIt\Controller\AppController;
 
@@ -21,7 +22,8 @@ class SeekController extends AppController
         if($this->Auth) {
             $this->Auth->allow();
         }
-        $this->loadModel('SeekItDocuments');
+        $this->loadModel('SeekIt.SeekItDocuments');
+        $this->loadModel('SeekIt.SeekItDocumentFields');
     }
 
     /**
@@ -35,17 +37,19 @@ class SeekController extends AppController
         $term = (array_key_exists("seek-it-search",$qs)) ? $qs["seek-it-search"] : "";
         $this->set('term', htmlentities($term) );
         $this->set('results',[]);
-        
+        debug(Configure::read('SeekIt.show'));
+        die;
         if($term != "") {
-            $this->paginate = [
-                'fields' => [],
-                'contain' => [],
-                'conditions' => "MATCH(title, subtitle, body) AGAINST('{$term}' IN BOOLEAN MODE)",
-                'order' => [],
-                'sortWhitelist'=> []
-            ];
             try {
-                $this->set('results', $this->paginate($this->SeekItDocuments));
+                $results =  $this->SeekItDocuments->find()
+                    ->select(["rating" => "MATCH (title, subtitle, body) AGAINST ('$term')"])
+                    ->autoFields(true)
+                    ->where([
+                        "MATCH(title, subtitle, body) AGAINST('$term' IN BOOLEAN MODE)"
+                    ])
+                    ->contain(['SeekItDocumentFields'])
+                    ->order(['rating' => 'desc']);
+                $this->set('results', $results );
             } catch(\PDOException $e) {
                 // Excepetion when erro on execute the searching
             }

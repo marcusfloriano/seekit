@@ -38,9 +38,7 @@ class SeekItDocumentsTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('SeekItDocumentFields')
-            ->setForeignKey('seek_it_documents_id')
-            ->setDependent(true);
+        $this->hasMany('SeekIt.SeekItDocumentFields');
     }
 
     /**

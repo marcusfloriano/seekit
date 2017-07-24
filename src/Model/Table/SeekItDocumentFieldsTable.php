@@ -36,10 +36,7 @@ class SeekItDocumentFieldsTable extends Table
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('SeekItDocuments', [
-            'foreignKey' => 'seek_it_documents_id',
-            'className' => 'SeekIt.SeekItDocuments'
-        ]);
+        $this->belongsTo('SeekIt.SeekItDocuments');
     }
 
     /**
@@ -80,8 +77,6 @@ class SeekItDocumentFieldsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['seek_it_documents_id'], 'SeekItDocuments'));
-
         return $rules;
     }
 }

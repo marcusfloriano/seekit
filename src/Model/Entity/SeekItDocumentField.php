@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * SeekItDocumentField Entity
  *
  * @property int $id
- * @property int $seek_it_documents_id
+ * @property int $seek_it_document_id
  * @property string $name
  * @property string $value_string
  * @property int $value_integer
