@@ -38,6 +38,7 @@ class SeekController extends AppController
         $this->set('results',[]);
         if($term != "") {
             try {
+                $term = preg_replace("/[\.\-]+/","",$term);
                 $results =  $this->SeekItDocuments->find()
                     ->select(["rating" => "MATCH (title, subtitle, body) AGAINST ('$term')"])
                     ->autoFields(true)
