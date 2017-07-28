@@ -1,12 +1,22 @@
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-body">
-            <form class="row" action="/seek-it/seek" method="GET">
-                <div class="form-group col-md-8">
-                    <input type="text" class="form-control" id="seek-it-search" name="seek-it-search" placeholder="Search" value="<?php echo $term ?>" />
-                </div>
-                <button type="submit" class="btn btn-default col-md-1">Submit</button>
-            </form>
+            <div class="row">
+                <form class="col-md-8" action="/seek-it/seek" method="GET">
+                    <div class="row">
+                        <div class="form-group col-md-11">
+                            <input type="text" class="form-control" id="seek-it-search" name="seek-it-search" placeholder="Search" value="<?php echo $term ?>" />
+                        </div>
+                        <button type="submit" class="btn btn-default col-md-1">Submit</button>
+                    </div>
+                </form>
+                <form class="col-md-4">
+                    <select class="form-control">
+                        <option>Add Filter</option>
+                        <?php echo $this->SeekFilter->showFilters() ?>
+                    </select>
+                </form>
+            </div>
         </div>
     </div>
     <div class="panel panel-default">

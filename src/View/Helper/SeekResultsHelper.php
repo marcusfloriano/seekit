@@ -22,7 +22,7 @@ class SeekResultsHelper extends Helper
     ];
 
     private function getFields() {
-        $extra_fields = Configure::read('SeekIt.fields_show');
+        $extra_fields = Configure::read('SeekIt.fields');
         if(!empty($extra_fields)) {
             return $extra_fields;
         }
